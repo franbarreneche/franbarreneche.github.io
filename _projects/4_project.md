@@ -1,7 +1,7 @@
 ---
 layout: page
-title: project 4
-description: another without an image
+title: Espaciotec
+description: Laravel admin panel for an NGO
 img:
 importance: 3
 category: fun

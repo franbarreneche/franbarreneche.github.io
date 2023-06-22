@@ -1,7 +1,7 @@
 ---
 layout: page
-title: project 6
-description: a project with no image
+title: Planillero
+description: Laravel app to create documentation for soccer tournaments
 img:
 importance: 4
 category: fun

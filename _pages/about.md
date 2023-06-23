@@ -9,8 +9,8 @@ profile:
   image: prof_pic.jpg
   image_circular: true # crops the image to make it circular
   address: >
-    <p>+54 9 2914 13-3155</p>
-    <p>Coronel Suárez, Buenos Aires</p>
+    <p>+549 2914 13-3155</p>
+    <p>Buenos Aires</p>
     <p>Argentina</p>
 
 news: false  # includes a list of news items

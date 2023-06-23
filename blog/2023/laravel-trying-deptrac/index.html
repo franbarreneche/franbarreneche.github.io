@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>teaching | Francisco F. Barreneche</title>
+    <title>Laravel trying deptrac | Francisco F. Barreneche</title>
     <meta name="author" content="Francisco F. Barreneche">
-    <meta name="description" content="Materials for courses you taught. Replace this text with your description.">
+    <meta name="description" content="Deptrac, a great php tool">
     <meta name="keywords" content="portfolio, laravel, angular, typescript">
 
 
@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="https://franbarreneche.github.io/teaching/">
+    <link rel="canonical" href="https://franbarreneche.github.io/blog/2023/laravel-trying-deptrac/">
 
     <!-- Dark Mode -->
     
@@ -77,8 +77,8 @@
               </li>
               
               <!-- Blog -->
-              <li class="nav-item ">
-                <a class="nav-link" href="/blog/">blog</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="/blog/">blog<span class="sr-only">(current)</span></a>
               </li>
 
               <!-- Other pages -->
@@ -91,8 +91,8 @@
               <li class="nav-item ">
                 <a class="nav-link" href="/cv/">cv</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="/teaching/">teaching<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/teaching/">teaching</a>
               </li>
 
               <!-- Toogle theme mode -->
@@ -119,22 +119,155 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <!-- page.html -->
-        <div class="post">
+        <!-- _layouts/post.html -->
 
-          <header class="post-header">
-            <h1 class="post-title">teaching</h1>
-            <p class="post-description">Materials for courses you taught. Replace this text with your description.</p>
-          </header>
+<div class="post">
 
-          <article>
-            <p>For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to <code class="language-plaintext highlighter-rouge">_projects/</code> so that you can have a dedicated page for each course.</p>
+  <header class="post-header">
+    <h1 class="post-title">Laravel trying deptrac</h1>
+    <p class="post-meta">June 22, 2023</p>
+    <p class="post-tags">
+      <a href="/blog/2023"> <i class="fas fa-calendar fa-sm"></i> 2023 </a>
+        ·  
+        <a href="/blog/tag/laravel">
+          <i class="fas fa-hashtag fa-sm"></i> laravel</a>  
+          <a href="/blog/tag/php">
+          <i class="fas fa-hashtag fa-sm"></i> php</a>  
+          <a href="/blog/tag/deptract">
+          <i class="fas fa-hashtag fa-sm"></i> deptract</a>  
+          
+        ·  
+        <a href="/blog/category/code">
+          <i class="fas fa-tag fa-sm"></i> code</a>  
+          
 
-<p>Organize your courses by years, topics, or universities, however you like!</p>
+    </p>
+  </header>
 
-          </article>
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>A few days ago, I was testing a tool for analyzing the structure of a project and enforcing certain rules, mainly related to dependencies.</p>
 
-        </div>
+<p>The library in question is called deptrac, and its documentation can be found in the following link: <a href="https://qossmic.github.io/deptrac/" rel="external nofollow noopener" target="_blank">Link</a></p>
+
+<p>This tool allows developers to specify the project’s structure in the form of layers using a YAML file. It then allows them to indicate the dependencies that exist (that are going to be rules the project should enforce) between the different layers.</p>
+
+<p>After installing it, I tried running it on an existing project at the company where I am currently working. For this purpose, I created a deptrac.yaml file in the root of the Laravel project, that contains the following structure and rules:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">deptrac</span><span class="pi">:</span>
+  <span class="na">paths</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">./app</span>
+  <span class="na">layers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Controller</span>
+      <span class="na">collectors</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">className</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s">.*Controller.*</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Repository</span>
+      <span class="na">collectors</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">className</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s">.*Repository.*</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Service</span>
+      <span class="na">collectors</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">className</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s">.*Service.*</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Model</span>
+      <span class="na">collectors</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">directory</span>
+          <span class="na">value</span><span class="pi">:</span> <span class="s">.*Models*</span>
+  <span class="na">ruleset</span><span class="pi">:</span>
+    <span class="na">Controller</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">Service</span>
+    <span class="na">Service</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">Repository</span>
+    <span class="na">Repository</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">Model</span>
+    <span class="na">Model</span><span class="pi">:</span> <span class="s">~</span>
+</code></pre></div></div>
+
+<p>Next, I used the following command to generate a report that provides information about rule violations:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php vendor/bin/deptrac analyse
+</code></pre></div></div>
+
+<p>This command analyzes the project’s structure based on the rules defined in the deptrac.yaml file and generates a report highlighting any violations found.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-report.JPG-480.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-report.JPG-800.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-report.JPG-1400.webp"></source>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-report.JPG" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+
+<p>Finally, I used the tool to generate an image that visualizes the dependencies between different layers, with red lines indicating violations of the rules defined in the YAML file.</p>
+
+<p>The specific command used to generate this image depends on the configuration and options of the deptrac tool. However, a common command to generate the image could be:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php vendor/bin/deptrac <span class="nt">--formatter</span><span class="o">=</span>graphviz-display
+</code></pre></div></div>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-image-480.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-image-800.webp"></source>
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-image-1400.webp"></source>
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/2023-06-22-laravel-trying-deptrac/deptrac-image.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+
+    </div>
+  </article>
+
+
+  
+    
+    <br>
+    <hr>
+    <br>
+    <ul class="list-disc pl-8"></ul>
+
+    <!-- Adds related posts to the end of an article -->
+    <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+    <p class="mb-2">Here are some more articles you might like to read next:</p>
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/laravel-typehinting-collections/">Laravel typehinting collections</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/angular-new-control-syntax/">Angular new control syntax</a>
+  </li>
+
+</div>
 
       
     </div>

@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>teaching | Francisco F. Barreneche</title>
+    <title>Laravel typehinting collections | Francisco F. Barreneche</title>
     <meta name="author" content="Francisco F. Barreneche">
-    <meta name="description" content="Materials for courses you taught. Replace this text with your description.">
+    <meta name="description" content="A small tip to help you IDE">
     <meta name="keywords" content="portfolio, laravel, angular, typescript">
 
 
@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="https://franbarreneche.github.io/teaching/">
+    <link rel="canonical" href="https://franbarreneche.github.io/blog/2023/laravel-typehinting-collections/">
 
     <!-- Dark Mode -->
     
@@ -77,8 +77,8 @@
               </li>
               
               <!-- Blog -->
-              <li class="nav-item ">
-                <a class="nav-link" href="/blog/">blog</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="/blog/">blog<span class="sr-only">(current)</span></a>
               </li>
 
               <!-- Other pages -->
@@ -91,8 +91,8 @@
               <li class="nav-item ">
                 <a class="nav-link" href="/cv/">cv</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="/teaching/">teaching<span class="sr-only">(current)</span></a>
+              <li class="nav-item ">
+                <a class="nav-link" href="/teaching/">teaching</a>
               </li>
 
               <!-- Toogle theme mode -->
@@ -119,22 +119,95 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <!-- page.html -->
-        <div class="post">
+        <!-- _layouts/post.html -->
 
-          <header class="post-header">
-            <h1 class="post-title">teaching</h1>
-            <p class="post-description">Materials for courses you taught. Replace this text with your description.</p>
-          </header>
+<div class="post">
 
-          <article>
-            <p>For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to <code class="language-plaintext highlighter-rouge">_projects/</code> so that you can have a dedicated page for each course.</p>
+  <header class="post-header">
+    <h1 class="post-title">Laravel typehinting collections</h1>
+    <p class="post-meta">June 21, 2023</p>
+    <p class="post-tags">
+      <a href="/blog/2023"> <i class="fas fa-calendar fa-sm"></i> 2023 </a>
+        ·  
+        <a href="/blog/tag/laravel">
+          <i class="fas fa-hashtag fa-sm"></i> laravel</a>  
+          <a href="/blog/tag/php">
+          <i class="fas fa-hashtag fa-sm"></i> php</a>  
+          <a href="/blog/tag/collections">
+          <i class="fas fa-hashtag fa-sm"></i> collections</a>  
+          <a href="/blog/tag/array">
+          <i class="fas fa-hashtag fa-sm"></i> array</a>  
+          
+        ·  
+        <a href="/blog/category/code">
+          <i class="fas fa-tag fa-sm"></i> code</a>  
+          
 
-<p>Organize your courses by years, topics, or universities, however you like!</p>
+    </p>
+  </header>
 
-          </article>
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>As it has become popular lately, it is very common nowadays to add type hints to class attributes, function parameters, and return types.</p>
 
-        </div>
+<p>Since PHP currently doesn’t have support for generics, we can only indicate that a variable is of type “Collection” but there is no way with the current type system to specify what type of data is contained within that collection.</p>
+
+<p>One way to avoid this language limitation is to provide data type annotations using PHP Doc comments, in order to provide additional information to the IDE about the data type.</p>
+
+<p>Here’s an example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="kt">Collection</span> <span class="nv">$dontKnowWhatIsInside</span><span class="p">;</span>
+    <span class="cd">/** @var Collection&lt;int,CustomType1&gt; */</span>
+    <span class="k">protected</span> <span class="kt">Collection</span> <span class="nv">$knowWhatIsInside1</span><span class="p">;</span>
+    <span class="cd">/** @var Collection&lt;string,CustomType2&gt; */</span>
+    <span class="k">protected</span> <span class="kt">Collection</span> <span class="nv">$knowWhatIsInside2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The same problem arises when trying to provide information about the data type contained within a regular PHP array, and similarly, PHP Doc comments can be used to provide this information even allowing the use of data types that are unions.</p>
+
+<p>Here’s an example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="kt">array</span> <span class="nv">$dontKnowWhatIsInside</span><span class="p">;</span>
+    <span class="cd">/** @var CustomType1[] */</span>
+    <span class="k">protected</span> <span class="kt">array</span> <span class="nv">$knowWhatIsInside1</span><span class="p">;</span>
+    <span class="cd">/** @var array&lt;CustomType2|null&gt; */</span>
+    <span class="k">protected</span> <span class="kt">array</span> <span class="nv">$knowWhatIsInside2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    </div>
+  </article>
+
+
+  
+    
+    <br>
+    <hr>
+    <br>
+    <ul class="list-disc pl-8"></ul>
+
+    <!-- Adds related posts to the end of an article -->
+    <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+    <p class="mb-2">Here are some more articles you might like to read next:</p>
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/laravel-trying-deptrac/">Laravel trying deptrac</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2023/angular-new-control-syntax/">Angular new control syntax</a>
+  </li>
+
+</div>
 
       
     </div>

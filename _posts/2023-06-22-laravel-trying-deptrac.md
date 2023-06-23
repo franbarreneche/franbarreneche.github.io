@@ -8,7 +8,7 @@ categories: code
 ---
 A few days ago, I was testing a tool for analyzing the structure of a project and enforcing certain rules, mainly related to dependencies.
 
-The library in question is called deptrac, and its documentation can be found in the following link: https://qossmic.github.io/deptrac/
+The library in question is called deptrac, and its documentation can be found in the following link: [Link](https://qossmic.github.io/deptrac/)
 
 This tool allows developers to specify the project's structure in the form of layers using a YAML file. It then allows them to indicate the dependencies that exist (that are going to be rules the project should enforce) between the different layers.
 

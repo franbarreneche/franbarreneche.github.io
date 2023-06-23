@@ -7,7 +7,7 @@ subtitle: <a href='#'>Full Stack Developer</a>. Angular, Laravel, Typescript.
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: true # crops the image to make it circular
+  image_circular: false # crops the image to make it circular
   address: >
     <p>+549 2914 13-3155</p>
     <p>Buenos Aires</p>
